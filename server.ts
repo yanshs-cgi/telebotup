@@ -1,12 +1,14 @@
-import { menuMain, menuHandler } from "./menu";
+import { showMenu, handleMenu } from "./menu";
 
-export async function server(update: any) {
-  if (update.message?.text === ".menu") {
-    return menuMain(update.message.chat.id);
+export async function server(token: string, update: any) {
+  const text = update.message?.text;
+
+  if (text === "/menu" || text === ".menu") {
+    return showMenu(token, update.message.chat.id);
   }
 
   if (update.callback_query) {
     const chatId = update.callback_query.message.chat.id;
-    return menuHandler(chatId, update.callback_query.data);
+    return handleMenu(token, chatId, update.callback_query.data);
   }
 }
