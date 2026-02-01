@@ -1,17 +1,8 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
-export function auth(req: VercelRequest, res: VercelResponse): boolean {
-  const key = req.query.apikey;
-
-  if (key !== process.env.API_KEY) {
-    res.status(403).json({ success: false, message: "apikey invalid" });
-    return false;
-  }
-
+export function auth(req: VercelRequest, res: VercelResponse) {
   if (req.query.logout === "true") {
-    res.json({ success: true, message: "logout success" });
-    return false;
+    return { ok: false, logout: true };
   }
-
-  return true;
+  return { ok: true };
 }
