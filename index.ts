@@ -1,12 +1,13 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { auth } from "./api/auth";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
-  if (!auth(req, res)) return;
+  if (!req.query.token) {
+    return res.status(400).json({ success: false, message: "token required" });
+  }
 
   res.json({
     success: true,
     message: "API connected",
-    status: "online"
+    token_active: true
   });
 }
